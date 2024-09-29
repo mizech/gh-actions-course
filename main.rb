@@ -1,11 +1,11 @@
-class Car
-  attr_accessor :vendor, :model
-  def initialize(vendor, model)
-    @vendor = vendor
-    @model = model
-  end
+require "nokogiri"
+require "open-uri"
+
+kbbz = Nokogiri::HTML(URI.open("https://kbbz-halberg.de"))
+file = File.open("links.txt", "w")
+
+kbbz.search(".linie a").each do |subpage|
+  file.write("#{subpage.content.strip}" + "\n")
 end
 
-car1 = Car.new("Toyota", "Camry")
-puts "Car 1: #{car1.vendor} #{car1.model}"
 
